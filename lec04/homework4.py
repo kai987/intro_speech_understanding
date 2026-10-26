@@ -11,8 +11,27 @@ def next_birthday(date, birthdays):
     @return:
     birthday - the next day, after given date, on which somebody has a birthday
     list_of_names - list of all people with birthdays on that date
-    '''
-    birthday = (1,1)
-    list_of_names = []
+    ''' 
+    if not birthdays:
+        return None, []
+
+    future_dates = [
+        day for day, names in birthdays.items()
+        if day > date and names
+    ]
+
+    if future_dates:
+        birthday = min(future_dates)
+    else:
+        valid_dates = [
+            day for day, names in birthdays.items()
+            if names
+        ]
+        if not valid_dates:
+            return None, []
+        birthday = min(valid_dates)
+
+    list_of_names = birthdays[birthday]
+
     return birthday, list_of_names
     
